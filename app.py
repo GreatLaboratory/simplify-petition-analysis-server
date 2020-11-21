@@ -1,8 +1,10 @@
 import requests
 from flask import Flask, redirect
+from flask_cors import CORS
 from WordCloud import visualize, get_nouns
 
 app = Flask(__name__, static_url_path='', static_folder='static')
+CORS(app)
 
 
 @app.route('/')
