@@ -2,6 +2,7 @@ import requests
 from flask import Flask, redirect
 from flask_cors import CORS
 from WordCloud import visualize, get_nouns
+from Summarization import summarization
 
 app = Flask(__name__, static_url_path='', static_folder='static')
 CORS(app)
@@ -26,7 +27,16 @@ def summary(petitionID):
     result = res.json()
     question = result['question']
     answer = result['answer']
-    return ''
+    if answer == 'no content':
+        return {
+            'question': summarization(question),
+            'answer': answer,
+        }
+    else:
+        return {
+            'question': summarization(question),
+            'answer': summarization(answer),
+        }
 
 
 if __name__ == '__main__':
