@@ -11,14 +11,15 @@ def summarization(txt):
         if "." in sent[0:-1]:  # 문장 내 불필요한 온점은 삭제
             sent = sent.replace(".", "")
         if sent[-1] in [".", "?", "!"]:  # 마침표 유무에 따라 구분
-            continue
+            sent = sent
         else:
             sent = sent + "."  # 분리된 문장 끝에 온점 부여
         segment.append(sent)
-        if len(segment) <= 10:
-            result = " ".join(segment).replace("\n", "")  # 문장 내 enter 제거
-        else:
-            seg_str = " ".join(segment).replace("\n", "")
-            # \n 처리?  #요약된 문장 수 조정
-            result = summarize(seg_str, ratio=0.15, word_count=80)
+    if len(segment) <= 10:
+        result = " ".join(segment).replace("\n", "")  # 문장 내 enter 제거
+    else:
+        # \n 처리
+        # 요약된 문장 수 조정
+        seg_str = " ".join(segment).replace("\n", "")
+        result = summarize(seg_str, ratio=0.15, word_count=80)
     return result
